@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kokila Abhayasundara | DevOps & Security Engineer</title>
+    <title>Kokila Abhayasundara | DevSecOps Engineer</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230a0e27'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='%2300ff41' font-family='monospace'%3EK%3C/text%3E%3Cpath d='M20 20 L80 20 L80 80 L20 80 Z' fill='none' stroke='%2300ff41' stroke-width='2'/%3E%3C/svg%3E">
     <style>
         * {
@@ -22,12 +22,150 @@
             --danger: #ff0055;
         }
 
+        /* Navigation Styles */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 15px;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            gap: 5px;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--primary);
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 62px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 62px);
+                background: rgba(10, 14, 39, 0.98);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+                transition: left 0.3s ease;
+                border-right: 2px solid var(--primary);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            }
+
+            .nav-link {
+                display: block;
+                padding: 20px;
+                font-size: 1.1em;
+            }
+        }
+
         body {
             font-family: 'Courier New', monospace;
             background: var(--bg-darker);
             color: var(--text-secondary);
             overflow-x: hidden;
             line-height: 1.6;
+            padding-top: 62px;
         }
 
         .scanline {
@@ -480,6 +618,26 @@
     </style>
 </head>
 <body>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">KA</div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#certifications" class="nav-link">Certifications</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="scanline"></div>
     <canvas class="matrix-bg" id="matrix"></canvas>
 
@@ -491,7 +649,7 @@
             
             <div>
                 <h1 class="glitch">KOKILA ABHAYASUNDARA</h1>
-                <p class="subtitle">DevOps & Security Engineer</p>
+                <p class="subtitle">DevSecOps Engineer</p>
             </div>
         </div>
 
@@ -504,7 +662,7 @@
     </header>
 
     <div class="container">
-        <section class="terminal-section">
+        <section class="terminal-section" id="about">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -514,12 +672,12 @@
             <div class="terminal-body">
                 <div class="command-line">cat about.txt</div>
                 <p><span class="status-indicator"></span>System Status: <span style="color: var(--primary);">ACTIVE</span></p>
-                <p style="margin-top: 15px;">DevOps and Security Engineer with hands-on experience securing cloud infrastructure, conducting penetration testing, and implementing CI/CD security improvements. Proven track record of reducing deployment vulnerabilities by 85% through GitHub Actions automation, Docker integration, and AWS security best practices.</p>
+                <p style="margin-top: 15px;">DevSecOps Engineer with hands-on experience securing cloud infrastructure, conducting penetration testing, and implementing CI/CD security improvements. Proven track record of reducing deployment vulnerabilities by 85% through GitHub Actions automation, Docker integration, and AWS security best practices.</p>
                 <p style="margin-top: 15px;">Experienced in internal security operations including phishing simulations, IAM analysis, vulnerability scanning, and AWS compliance initiatives. Skilled in infrastructure monitoring with Prometheus and Grafana, threat detection using CloudWatch, and full-stack development with modern frameworks.</p>
             </div>
         </section>
 
-        <section class="terminal-section">
+        <section class="terminal-section" id="experience">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -532,7 +690,7 @@
                 
                 <div class="experience-timeline">
                     <div class="experience-item">
-                        <div class="job-title">DevOps and Security Engineer</div>
+                        <div class="job-title">DevSecOps Engineer</div>
                         <div class="company">Kingslake Engineering Systems (Pvt) Ltd | Internship</div>
                         <div class="card-meta">Feb 2025 – Present</div>
                         <ul>
@@ -549,7 +707,7 @@
             </div>
         </section>
 
-        <section class="terminal-section">
+        <section class="terminal-section" id="projects">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -634,7 +792,7 @@
             </div>
         </section>
 
-        <section class="terminal-section">
+        <section class="terminal-section" id="skills">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -694,7 +852,7 @@
             </div>
         </section>
 
-        <section class="terminal-section">
+        <section class="terminal-section" id="certifications">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -759,7 +917,7 @@
             </div>
         </section>
 
-        <section class="terminal-section">
+        <section class="terminal-section" id="education">
             <div class="terminal-header">
                 <span class="terminal-btn red"></span>
                 <span class="terminal-btn yellow"></span>
@@ -789,11 +947,50 @@
 
     <footer>
         <p style="color: var(--primary); font-size: 1.2em; margin-bottom: 10px;">[ SYSTEM READY ]</p>
-        <p>© 2025 Kokila Abhayasundara | DevOps & Security Engineer</p>
+        <p>© 2025 Kokila Abhayasundara | DevSecOps Engineer</p>
         <!-- <p style="margin-top: 10px; color: var(--text-secondary);">Securing the digital frontier, one deployment at a time.</p> -->
     </footer>
 
     <script>
+        // Navigation toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Active link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
         // Image upload handler
         const imageUpload = document.getElementById('imageUpload');
         const profileContainer = document.getElementById('profileContainer');
